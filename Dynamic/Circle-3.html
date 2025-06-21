@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+body{
+margin:0;
+display:flex;
+justify-content:center;
+background-color:#F0001D;
+overflow:hidden;}
+
+.slide{
+height:70vh;
+width:80vw;
+position:absolute;
+top:500px;
+display:flex;
+justify-content:center;
+align-items:center;
+color:rgba(0,0,0,0.3) ;
+box-shadow:1px 4.5px 12px currentcolor;
+opacity:20%;
+border-radius:20px;
+background-color:white;}
+
+.content{
+position: absolute;
+top:0px;
+display:flex;
+justify-content:center;
+width:100%;
+height:2000px;} 
+
+.frame{
+position: fixed;
+bottom:0px;
+justify-content:center;
+width:100vw;
+height:100vh;
+overflow-y:auto;
+display:none;}
+
+.frame:first-child{
+display:flex;}
+
+#BottomNavBar{
+display:flex;
+justify-content:center;
+position: fixed;
+bottom:0px;
+height:110px;
+width:100vw;
+overflow: hidden;}
+
+#sides{
+position: absolute;
+bottom:0;
+height:70px;
+width:100%;}
+
+.side{
+height: 70px;
+background: white;}
+
+.left{
+float: left;}
+
+.right{
+float: right;}
+
+#container{
+display:flex;
+justify-content:center;
+align-items:center;
+position: absolute;
+bottom:0px;
+height:100px;}
+
+#indicator{
+display:flex;
+justify-content:center;
+align-items:center;
+position: absolute;
+bottom:0px;
+height:100px;
+transition: 0.6s cubic-bezier(0,0,0,1);}
+
+#background{
+position: absolute;
+bottom:0px;
+left:-552.5px;}
+
+.icon{
+height:50px;
+width:50px;}
+
+.icons{
+position: absolute;
+height:50px;
+display:flex;}
+
+.icons.A{
+bottom:20px;}
+
+.icons.B, .icons.C{
+bottom:-120px;}
+
+.icon.A:nth-child(1){
+position: relative;
+bottom:-120px;}
+
+.icon.A{
+position: relative;
+bottom:0px;
+transition:bottom 0.6s cubic-bezier(0,0,0,1), opacity 0s;}
+
+.icon.B,.icon.C{
+position: relative;
+bottom:0px;
+transition:bottom 0.7s cubic-bezier(0,0,0,1), opacity 0s;}
+
+#blur{
+position:absolute;
+bottom:-25px;
+height:50px;
+filter:blur(5px);
+background-color:white;}
+
+.ICONS{
+height:80px;
+width:135px;
+display:flex;
+justify-content:center;
+position:absolute;
+bottom:30px;
+left:0px;}
+
+.ICON{
+position: absolute;
+bottom:-80px;
+display:flex;
+justify-content:center;
+height:50px;
+width:50px;
+box-shadow:1px 4.5px 9px currentcolor;
+color:rgba(0,0,0,0.35) ;
+border-radius:25px;
+background-color:white;
+transition: 0.6s  cubic-bezier(0,0,0,1) ;}
+
+.ICON:nth-child(1){
+position: absolute;
+bottom:8px;}
+
+.clicks{
+position:absolute;
+bottom:20px;
+height:50px;
+display:flex;}
+
+.click{
+height:50px;
+width:50px;}
+
+.path{
+stroke-dasharray:170;}
+
+.line{
+stroke-dasharray:170;
+stroke-dashoffset:170;}
+
+.dot {
+visibility: hidden;}
+
+@keyframes d6 {
+0% { d: path('M106.018 123.036C112.102 123.036 117.035 118.103 117.035 112.018C117.035 105.933 112.102 101 106.018 101C99.9327 101 95 105.933 95 112.018C95 118.103 99.9327 123.036 106.018 123.036Z');visibility:visible;}
+100% { d: path('M106.016 112.516C106.292 112.516 106.516 112.292 106.516 112.016C106.516 111.739 106.292 111.516 106.016 111.516C105.739 111.516 105.516 111.739 105.516 112.016C105.516 112.292 105.739 112.516 106.016 112.516Z'); visibility: visible;}}
+
+@keyframes d5 {
+0% { d: path('M106.018 160.907C112.102 160.907 117.035 155.974 117.035 149.889C117.035 143.804 112.102 138.871 106.018 138.871C99.9327 138.871 95 143.804 95 149.889C95 155.974 99.9327 160.907 106.018 160.907Z');visibility:visible;}
+100% { d: path('M106.016 150.391C106.292 150.391 106.516 150.167 106.516 149.891C106.516 149.614 106.292 149.391 106.016 149.391C105.739 149.391 105.516 149.614 105.516 149.891C105.516 150.167 105.739 150.391 106.016 150.391Z'); visibility: visible;}} 
+
+@keyframes d4 {
+0% { d: path('M106.018 198.778C112.102 198.778 117.035 193.845 117.035 187.76C117.035 181.675 112.102 176.742 106.018 176.742C99.9327 176.742 95 181.675 95 187.76C95 193.845 99.9327 198.778 106.018 198.778Z'); visibility: visible;}
+100% { d: path('M106.016 188.262C106.292 188.262 106.516 188.038 106.516 187.762C106.516 187.486 106.292 187.262 106.016 187.262C105.739 187.262 105.516 187.486 105.516 187.762C105.516 188.038 105.739 188.262 106.016 188.262Z'); visibility: visible;}}
+
+@keyframes d3 { 
+100% { d: path('M106.018 198.778C112.102 198.778 117.035 193.845 117.035 187.76C117.035 181.675 112.102 176.742 106.018 176.742C99.9327 176.742 95 181.675 95 187.76C95 193.845 99.9327 198.778 106.018 198.778Z'); visibility: visible;}}
+
+@keyframes d2 { 
+100% { d: path('M106.018 160.907C112.102 160.907 117.035 155.974 117.035 149.889C117.035 143.804 112.102 138.871 106.018 138.871C99.9327 138.871 95 143.804 95 149.889C95 155.974 99.9327 160.907 106.018 160.907Z');visibility:visible;}}
+
+@keyframes d1 { 
+100% { d: path('M106.018 123.036C112.102 123.036 117.035 118.103 117.035 112.018C117.035 105.933 112.102 101 106.018 101C99.9327 101 95 105.933 95 112.018C95 118.103 99.9327 123.036 106.018 123.036Z');visibility:visible;}}
+
+@keyframes trim {
+0%{ stroke-dashoffset: 170; visibility: visible;}
+100%{ stroke-dashoffset: 0; visibility: visible;}}
+
+@keyframes trim1 {
+100%{ stroke-dashoffset: 0; visibility: visible;}}
+
+@keyframes trim2 {
+0%{ stroke-dashoffset: 0; visibility: visible;}
+100%{ stroke-dashoffset: 170; visibility: visible;}}
+
+@media screen and (max-width: 600px) {
+
+.side{
+width: calc(50% - 207.5px);}
+
+#container{
+width:415px;}
+
+#indicator{
+--i1:110px;
+--i2:30px;
+left:30px;
+width:415px;}
+
+.icons{
+width:270px;
+column-gap:60px;}
+
+#blur{
+width:330px;}
+
+.clicks{
+width:270px;
+column-gap:60px;}
+
+}
+
+@media screen and (min-width: 601px) {
+
+.left, .right{
+width: calc(50% - 342.5px);}
+
+#container{
+width:685px;}
+
+#indicator{
+--i1:200px;
+--i2:75px;
+left:75px;
+width:685px;}
+
+.icons{
+width:450px;
+column-gap:150px;}
+
+#blur{
+width:600px;}
+
+.clicks{
+width:450px;
+column-gap:150px;}
+
+}
+
+</style>
+</head>
+<body>
+      
+<div class="frame">
+<div class="content">
+<div class="slide"><h1>Plugin</h1></div>
+</div>
+</div>
+
+<div class="frame">
+<div class="content">
+<div class="slide"><h1>Menu</h1></div>
+</div>
+</div>
+
+<div class="frame">
+<div class="content">
+<div class="slide"><h1>Change</h1></div>
+</div>
+</div>
+
+<div id="BottomNavBar">
+
+<div id="sides">
+<div class="side left"></div>
+<div class="side right"></div>
+</div>
+
+<div id="container">
+
+<div id="indicator">
+
+<div class="ICONS">
+
+       <div class="ICON">
+       <svg id="plugin" width="50" height="50" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path class="path" id="S1" d="M171.591 160.793H194.208C200.17 160.793 205.002 165.626 205.002 171.587V194.204C205.002 200.166 200.17 204.999 194.208 204.999H171.591C165.63 204.999 160.797 200.166 160.797 194.204V171.587C160.797 165.626 165.63 160.793 171.591 160.793Z" stroke="black" stroke-width="11" stroke-linecap="round"/>
+       <path class="path" id="S2" d="M139.206 171.587V194.204C139.206 200.166 134.373 204.999 128.411 204.999H105.794C99.8328 204.999 95 200.166 95 194.204V171.587C95 165.626 99.8328 160.793 105.794 160.793H128.411C134.373 160.793 139.206 165.626 139.206 171.587Z" stroke="black" stroke-width="11" stroke-linecap="round"/>
+       <path class="path" id="S3" d="M160.797 128.411V105.794C160.797 99.8328 165.63 95 171.591 95H194.208C200.17 95 205.002 99.8328 205.002 105.794V128.411C205.002 134.373 200.17 139.206 194.208 139.206H171.591C165.63 139.206 160.797 134.373 160.797 128.411Z" stroke="black" stroke-width="11" stroke-linecap="round"/>
+       <path class="path" id="S4" d="M128.411 139.206H105.794C99.8328 139.206 95 134.373 95 128.411V105.794C95 99.8328 99.8328 95 105.794 95H128.411C134.373 95 139.206 99.8328 139.206 105.794V128.411C139.206 134.373 134.373 139.206 128.411 139.206Z" stroke="black" stroke-width="11" stroke-linecap="round"/>
+       </svg>
+       </div>
+    
+       <div class="ICON"> 
+       <svg id="menu" width="50" height="50" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path class="line" id="L3" d="M205 187.75H132.869" stroke="black" stroke-width="11" stroke-linecap="round"/>
+       <path class="line" id="L2" d="M205 149.895H132.869" stroke="black" stroke-width="11" stroke-linecap="round"/>
+       <path class="line" id="L1" d="M205 112.02H132.869" stroke="black" stroke-width="11" stroke-linecap="round"/>
+       <path class="dot" id="D3" d="M106.016 188.262C106.292 188.262 106.516 188.038 106.516 187.762C106.516 187.486 106.292 187.262 106.016 187.262C105.739 187.262 105.516 187.486 105.516 187.762C105.516 188.038 105.739 188.262 106.016 188.262Z" fill="black"/>
+       <path class="dot" id="D2" d="M106.016 150.391C106.292 150.391 106.516 150.167 106.516 149.891C106.516 149.614 106.292 149.391 106.016 149.391C105.739 149.391 105.516 149.614 105.516 149.891C105.516 150.167 105.739 150.391 106.016 150.391Z" fill="black"/>
+       <path class="dot" id="D1" d="M106.016 112.516C106.292 112.516 106.516 112.292 106.516 112.016C106.516 111.739 106.292 111.516 106.016 111.516C105.739 111.516 105.516 111.739 105.516 112.016C105.516 112.292 105.739 112.516 106.016 112.516Z" fill="black"/>
+       </svg>
+       </div>
+   
+       <div class="ICON">
+       <svg  id="change" width="50" height="50" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path class="path" id="P1" d="M195.719 174.383H106.295C105.8 174.383 105.543 174.972 105.879 175.335L133.347 205.001" stroke="black" stroke-width="12" stroke-linecap="round"/>
+       <path class="path" id="P2" d="M195.719 174.38H106.295C105.8 174.38 105.543 173.791 105.879 173.428L133.347 143.762" stroke="black" stroke-width="12" stroke-linecap="round"/>
+       <path class="path" id="P3" d="M105 125.617H194.424C194.919 125.617 195.176 126.206 194.84 126.569L167.371 156.236" stroke="black" stroke-width="12" stroke-linecap="round"/>
+       <path class="path" id="P4" d="M105 125.619H194.424C194.919 125.619 195.176 125.029 194.84 124.666L167.371 95" stroke="black" stroke-width="12" stroke-linecap="round"/>
+       </svg>
+       </div>
+
+</div>
+
+<svg id="background" width="1240" height="70" viewBox="0 0 1240 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M649.007 21.7368C655.625 11.1928 662.65 0 687.5 0H1240V70H0V0H552.5C577.349 0 584.375 11.1926 590.993 21.7366C596.886 31.1255 602.456 40 620.001 40C637.544 40 643.114 31.1256 649.007 21.7368Z" fill="white"/>
+</svg>
+
+</div>
+
+</div>
+
+<div class="icons A">
+
+       <div class="icon A">
+       <img id="plugin" src="plugin.svg">
+       </div>
+       
+       <div class="icon A">
+       <img id="menu" src="menu.svg">
+       </div>
+       
+       <div class="icon A">
+       <img id="change" src="change.svg">
+       </div>
+
+</div>
+
+<div class="icons B">
+
+       <div class="icon B">
+       <img id="plugin" src="plugin.svg">
+       </div>
+       
+       <div class="icon B">
+       <img id="menu" src="menu.svg">
+       </div>
+       
+       <div class="icon B">
+       <img id="change" src="change.svg">
+       </div>
+
+</div>
+
+<div class="icons C">
+
+       <div class="icon C">
+       <img id="plugin" src="plugin.svg">
+       </div>
+       
+       <div class="icon C">
+       <img id="menu" src="menu.svg">
+       </div>
+       
+       <div class="icon C">
+       <img id="change" src="change.svg">
+       </div>
+
+</div>
+
+<div id="blur"></div>
+
+<div class="clicks">
+<div class="click" id="Click1"></div>
+<div class="click" id="Click2"></div>
+<div class="click" id="Click3"></div>
+</div>
+
+</div>
+
+<script>
+
+const IconAs = document.querySelectorAll(".icon.A");
+const IconBs = document.querySelectorAll(".icon.B");
+const IconCs = document.querySelectorAll(".icon.C");
+const ICONs = document.querySelectorAll(".ICON");
+const Frames = document.querySelectorAll(".frame");
+
+var x = 0;
+
+// reset IconAs & IconBs & IconCs//
+const reset = () => {
+IconCs.forEach((IconC, index) => {
+IconCs[index].style.bottom="0px",IconCs[index].style.opacity="0";});
+
+IconBs.forEach((IconB, index) => {
+IconBs[index].style.bottom="0px",IconBs[index].style.opacity="0";});
+
+IconAs.forEach((IconA, index) => {
+IconAs[index].style.bottom="0px",IconAs[index].style.opacity="1";}); };
+
+const Icon1 = () => {
+
+indicator.style.left="calc(var(--i2))";
+reset();
+IconAs[0].style.bottom="-120px",IconAs[0].style.opacity="0";
+
+// set the opacity & location of moving icons//
+if(x == 2){
+IconAs[1].style.opacity="0",
+IconCs[1].style.opacity="1",IconCs[1].style.bottom="140px";};
+
+// ICONS //
+ICONs.forEach((ICON, index) => {
+if(index != 0){ICONs[index].style.bottom="-80px";};
+ICONs[0].style.bottom="8px"; });
+
+// trim path animation //
+S1.style.animation="trim 0.9s forwards",S2.style.animation="trim 0.9s forwards", S3.style.animation="trim 1s forwards", S4.style.animation="trim 1s forwards";
+D3.style.animation="d6 1s forwards",D2.style.animation="d5 1s forwards",D1.style.animation="d4 1s forwards",L3.style.animation="trim2 1s forwards",L2.style.animation="trim2 1s forwards",L1.style.animation="trim2 1s forwards";
+P1.style.animation="trim2 1s forwards",P2.style.animation="trim2 1s forwards",P3.style.animation="trim2 1s forwards",P4.style.animation="trim2 1s forwards";
+
+// frames //
+Frames.forEach((Frame, index) => {
+if(index != 0){Frames[index].style.display="none";};
+Frames[0].style.display="flex";});
+
+x = 0;};
+
+const Icon2 = () => {
+
+indicator.style.left="calc(var(--i2) + var(--i1))";
+reset();
+IconAs[1].style.bottom="-120px",IconAs[1].style.opacity="0";
+
+// set the opacity & location of moving icons//
+
+// ICONS //
+ICONs.forEach((ICON, index) => {
+if(index != 1){ICONs[index].style.bottom="-80px";};
+ICONs[1].style.bottom="8px"; });
+
+// trim path animation //
+D3.style.animation="d3 0.8s forwards 0.2s",D2.style.animation="d2 0.8s forwards 0.1s",D1.style.animation="d1 0.8s forwards 0s",L3.style.animation="trim1 2s forwards 0.2s",L2.style.animation="trim1 2s forwards 0.1s",L1.style.animation="trim1 2s forwards 0s";
+S1.style.animation="trim2 1s forwards",S2.style.animation="trim2 1s forwards",S3.style.animation="trim2 1s forwards", S4.style.animation="trim2 1s forwards";
+P1.style.animation="trim2 1s forwards",P2.style.animation="trim2 1s forwards",P3.style.animation="trim2 1s forwards",P4.style.animation="trim2 1s forwards";
+
+// frames //
+Frames.forEach((Frame, index) => {
+if(index != 1){Frames[index].style.display="none";};
+Frames[1].style.display="flex";});
+
+x = 1;};
+
+const Icon3 = () => {
+
+indicator.style.left="calc(var(--i2) + var(--i1)*2)";
+reset();
+IconAs[2].style.bottom="-120px",IconAs[2].style.opacity="0";
+
+// set the opacity & location of moving icons//
+if(x == 0){
+IconAs[1].style.opacity="0",
+IconBs[1].style.opacity="1",IconBs[1].style.bottom="140px";};
+
+// ICONS //
+ICONs.forEach((ICON, index) => {
+if(index != 2){ICONs[index].style.bottom="-80px";};
+ICONs[2].style.bottom="8px"; });
+
+// trim path animation //
+P1.style.animation="trim 1.2s forwards",P2.style.animation="trim 1.2s forwards",P3.style.animation="trim 1.2s forwards",P4.style.animation="trim 1.2s forwards";
+D3.style.animation="d6 1s forwards",D2.style.animation="d5 1s forwards",D1.style.animation="d4 1s forwards",L3.style.animation="trim2 1s forwards",L2.style.animation="trim2 1s forwards",L1.style.animation="trim2 1s forwards";
+S1.style.animation="trim2 1s forwards",S2.style.animation="trim2 1s forwards",S3.style.animation="trim2 1s forwards", S4.style.animation="trim2 1s forwards";
+
+// frames //
+Frames.forEach((Frame, index) => {
+if(index != 2){Frames[index].style.display="none";};
+Frames[2].style.display="flex"; });
+
+x = 2;};
+
+Click1.addEventListener("click",Icon1);
+Click2.addEventListener("click",Icon2);
+Click3.addEventListener("click",Icon3);
+
+</script>
+</body>
+</html>
