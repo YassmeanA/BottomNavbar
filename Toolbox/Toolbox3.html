@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="Gentle-Lamp.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+
+body{
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:white;
+overflow:hidden;}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: "Istok Web", serif;
+font-weight: 300;
+font-style: normal;}
+
+:root{
+--primary:#FFDDF3;
+--secondary:#820767;}
+
+.Header{
+position: sticky;
+top:0px;
+width:100vw;
+height:55px;}
+
+.back{
+position: absolute;
+top:10px;
+left:10px;
+border-radius:9px;
+background:rgba(252,252,252,0.2);
+box-shadow:1px 4.5px 12px rgba(0,0,0,0.1);}
+
+.frame.S{
+z-index:1;
+display:flex;
+left:100vw;
+background:var(--secondary);
+transition:0.3s;}
+
+.frame.S.active {
+left:0;
+width:100vw;}
+
+.slide{
+height:70vh;
+width:80vw;
+position:absolute;
+top:500px;
+display:flex;
+justify-content:center;
+align-items:center;
+color:rgba(0,0,0,0.3) ;
+box-shadow:1px 4.5px 12px currentcolor;
+opacity:20%;
+border-radius:20px;
+background-color:white;}
+
+.content{
+position: absolute;
+top:0px;
+display:flex;
+justify-content:center;
+width:100%;
+height:2000px;} 
+
+.frame{
+position: fixed;
+bottom:0px;
+justify-content:center;
+width:100vw;
+height:100vh;
+overflow-y:auto;
+display:none;}
+
+.frame.active  {
+display:flex;}
+
+.icon{
+position:absolute;
+width:40px;
+height:40px;
+display:flex;
+justify-content:center;
+align-items:center;
+transition:0.7s cubic-bezier(0,0,0,1);}
+
+.toolbox{
+position:absolute;
+bottom:300px;
+filter:url(#liquid);
+width:80px;
+height:80px;
+border-radius:40px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:var(--primary);
+transition:0.7s cubic-bezier(0,0,0,1);}
+
+.toolbox .icon.plus{
+width:80px;
+height:80px;
+position: absolute;
+display:flex;
+justify-content:center;
+align-items:center;}
+
+.Button{
+width:40px;
+height:40px;
+border-radius:10px;
+background:var(--secondary);}
+
+.toolbox .background{
+position:absolute;
+left:0;
+width:50px;
+height:50px;
+border-radius:25px;
+margin:15px;
+background:var(--secondary);
+transform:scale(0.5);
+opacity:0;}
+
+.toolbox .Background{
+position:absolute;
+left:0;
+top:0;
+z-index:-1;
+background:var(--primary);
+width:80px;
+height:80px;
+filter:blur(5px);
+border-radius:40px;}
+
+.toolbox .icon.A{
+width:80px;
+height:80px;
+border-radius:40px;}
+
+.toolbox.active .Background.A{
+transform:scale(0.5);}
+
+.Plus{
+transition:0.5s;}
+
+.toolbox.active .Plus{
+transform:rotate(135deg);}
+
+.toolbox .icon.A:nth-child(2),
+.toolbox .icon.A:nth-child(3),
+.toolbox .icon.A:nth-child(4),
+.toolbox .icon.A:nth-child(5){
+left:0px;
+bottom:0px;}
+
+.toolbox.active .icon.A:nth-child(2){
+left:-40px;
+bottom:40px;}
+
+.toolbox.active .icon.A:nth-child(3){
+left:40px;
+bottom:40px;}
+
+.toolbox.active .icon.A:nth-child(4){
+left:40px;
+bottom:-40px;}
+
+.toolbox.active .icon.A:nth-child(5){
+left:-40px;
+bottom:-40px;}
+
+.toolbox.active .icon.A.active .background{
+animation:circle 0.5s;}
+
+@keyframes circle {
+50%{transform:scale(1);opacity:0.15;}
+100%{transform:scale(0.5);opacity:0;}}
+
+</style>
+<body>
+
+<div class="frame active"></div>
+
+<div class="frame">
+<div class="content">
+<div class="slide"><h1>Check</h1></div>
+</div>
+</div>
+
+<div class="frame">
+<div class="content">
+<div class="slide"><h1>Record</h1></div>
+</div>
+</div>
+
+<div class="frame">
+<div class="content">
+<div class="slide"><h1>Paint</h1></div>
+</div>
+</div>
+
+<div class="frame">
+<div class="content">
+<div class="slide"><h1>Camera</h1></div>
+</div>
+</div>
+
+<div id="Toolbox" class="toolbox">
+
+<div id="Add" class="icon plus" style="width:80px;height:80px;border-radius:40px;z-index:1;">
+<div class="Background A"></div>
+<div class="Button">
+<svg class="Plus" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M19.8008 12.8008C20.1653 12.8008 20.4612 13.0966 20.4612 13.4612V19.1404H26.1404C26.3155 19.1404 26.4835 19.21 26.6074 19.3338C26.7312 19.4577 26.8008 19.6256 26.8008 19.8008C26.8008 19.9759 26.7312 20.1439 26.6074 20.2677C26.4835 20.3916 26.3155 20.4612 26.1404 20.4612H20.4612V26.1404C20.4612 26.3155 20.3916 26.4835 20.2677 26.6074C20.1439 26.7312 19.9759 26.8008 19.8008 26.8008C19.6256 26.8008 19.4577 26.7312 19.3338 26.6074C19.21 26.4835 19.1404 26.3155 19.1404 26.1404V20.4612H13.4612C13.286 20.4612 13.118 20.3916 12.9942 20.2677C12.8704 20.1439 12.8008 19.9759 12.8008 19.8008C12.8008 19.6256 12.8704 19.4577 12.9942 19.3338C13.118 19.21 13.286 19.1404 13.4612 19.1404H19.1404V13.4612C19.1404 13.0966 19.4363 12.8008 19.8008 12.8008Z" fill="var(--primary)"/>
+</svg>
+</div>
+</div>
+
+<div class="icon A">
+<div class="Background"></div>
+<div class="background"></div>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="12.7" y="12.7" width="14.6" height="14.6" rx="1.7" stroke="var(--secondary)" stroke-width="1.4"/>
+<path d="M19.0447 23.1665C18.9764 23.2349 18.8952 23.2893 18.8059 23.3263C18.7165 23.3634 18.6208 23.3824 18.5241 23.3824C18.4273 23.3824 18.3316 23.3634 18.2422 23.3263C18.1529 23.2893 18.0718 23.2349 18.0034 23.1665L15.3524 20.5154C15.284 20.447 15.2298 20.3659 15.1928 20.2765C15.1558 20.1872 15.1367 20.0915 15.1367 19.9948C15.1367 19.8981 15.1558 19.8024 15.1928 19.713C15.2298 19.6237 15.284 19.5425 15.3524 19.4742C15.4207 19.4058 15.5019 19.3516 15.5912 19.3146C15.6806 19.2776 15.7763 19.2585 15.873 19.2585C15.9697 19.2585 16.0654 19.2776 16.1547 19.3146C16.2441 19.3516 16.3252 19.4058 16.3936 19.4742L18.5204 21.6009L23.601 16.5203C23.7391 16.3823 23.9263 16.3047 24.1216 16.3047C24.3169 16.3047 24.5041 16.3823 24.6422 16.5203C24.7803 16.6584 24.8579 16.8457 24.8579 17.0409C24.8579 17.2362 24.7803 17.4235 24.6422 17.5616L19.0447 23.1665Z" fill="var(--secondary)"/>
+</svg>
+</div>
+
+<div class="icon A">
+<div class="Background"></div>
+<div class="background"></div>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M22.7992 14.8C22.7992 13.2536 21.5456 12 19.9992 12C18.4528 12 17.1992 13.2536 17.1992 14.8V20C17.1992 21.5464 18.4528 22.8 19.9992 22.8C21.5456 22.8 22.7992 21.5464 22.7992 20V14.8Z" stroke="var(--secondary)" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M14 19.6016C14 22.9152 16.6864 25.6016 20 25.6016M20 25.6016C23.3136 25.6016 26 22.9152 26 19.6016M20 25.6016V28.0016" stroke="var(--secondary)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+
+<div class="icon A">
+<div class="Background"></div>
+<div class="background"></div>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M27.9888 13.7349L27.9891 13.7352C28.0302 13.7763 28.0629 13.825 28.0851 13.8787C28.1074 13.9324 28.1189 13.99 28.1189 14.0481C28.1189 14.1062 28.1074 14.1638 28.0851 14.2175C28.0629 14.2712 28.0302 14.32 27.9891 14.361L27.9888 14.3613L20.3182 22.0319L18.4974 20.2112L26.168 12.5406L26.1683 12.5403C26.2094 12.4991 26.2582 12.4665 26.3119 12.4442C26.3655 12.4219 26.4231 12.4105 26.4812 12.4105C26.5394 12.4105 26.5969 12.4219 26.6506 12.4442C26.7043 12.4665 26.7531 12.4991 26.7941 12.5403L26.7945 12.5406L27.9888 13.7349Z" stroke="var(--secondary)" stroke-width="0.891262"/>
+<path d="M16.0579 21.7266C14.5784 21.7266 13.3841 22.9209 13.3841 24.4003C13.3841 25.5679 12.3502 26.1829 11.6016 26.1829C12.4215 27.2702 13.8208 27.9654 15.1666 27.9654C17.1363 27.9654 18.7317 26.37 18.7317 24.4003C18.7317 22.9209 17.5374 21.7266 16.0579 21.7266Z" fill="var(--secondary)"/>
+</svg>
+</div>
+
+<div class="icon A">
+<div class="Background"></div>
+<div class="background"></div>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.1011 12.7403L16.1011 12.7402C16.1922 12.558 16.3322 12.4046 16.5055 12.2975C16.6787 12.1903 16.8784 12.1335 17.0821 12.1333C17.0822 12.1333 17.0822 12.1333 17.0822 12.1333L22.9467 12.1333C23.1504 12.1333 23.35 12.19 23.5233 12.297C23.6965 12.404 23.8366 12.5571 23.9278 12.7391L23.9279 12.7391L24.7107 14.3006C24.8012 14.481 24.9857 14.5949 25.1875 14.5949H28.0138C28.1417 14.5949 28.2643 14.6457 28.3547 14.7361C28.4451 14.8265 28.4959 14.9491 28.4959 15.0769V27.3846C28.4959 27.5125 28.4451 27.6351 28.3547 27.7255C28.2643 27.8159 28.1417 27.8667 28.0138 27.8667H12.0138C11.886 27.8667 11.7634 27.8159 11.673 27.7255C11.5826 27.6351 11.5318 27.5125 11.5318 27.3846V15.0769C11.5318 14.9491 11.5826 14.8265 11.673 14.7361C11.7634 14.6457 11.886 14.5949 12.0138 14.5949H14.8436C15.0456 14.5949 15.2302 14.4808 15.3206 14.3002L16.1011 12.7403ZM26.9984 15.559H13.0292C12.7347 15.559 12.4959 15.7978 12.4959 16.0923V26.3692C12.4959 26.6638 12.7347 26.9026 13.0292 26.9026H26.9984C27.293 26.9026 27.5318 26.6638 27.5318 26.3692V16.0923C27.5318 15.7978 27.293 15.559 26.9984 15.559ZM20.0138 25.4051C18.9067 25.4051 17.8449 24.9653 17.0621 24.1825C16.2793 23.3996 15.8395 22.3379 15.8395 21.2308C15.8395 20.1237 16.2793 19.0619 17.0621 18.2791C17.8449 17.4962 18.9067 17.0564 20.0138 17.0564C21.1209 17.0564 22.1827 17.4962 22.9655 18.2791C23.7484 19.0619 24.1882 20.1237 24.1882 21.2308C24.1882 22.3379 23.7484 23.3996 22.9655 24.1825C22.1827 24.9653 21.1209 25.4051 20.0138 25.4051Z" fill="var(--secondary)" stroke="var(--secondary)" stroke-width="0.266667"/>
+</svg>
+</div>
+
+<div class="icon A active" style="display:none;"></div>
+
+</div>
+
+<div class="frame S">
+<div class="content">
+<div class="slide"><h1>Check</h1></div>
+</div>
+<div class="Header">
+<svg class="back" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 22L12 17L17 12M12.6944 17H22.8333" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+</div>
+
+<div class="frame S">
+<div class="content">
+<div class="slide"><h1>Record</h1></div>
+</div>
+<div class="Header">
+<svg class="back" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 22L12 17L17 12M12.6944 17H22.8333" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+</div>
+
+<div class="frame S">
+<div class="content">
+<div class="slide"><h1>Paint</h1></div>
+</div>
+<div class="Header">
+<svg class="back" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 22L12 17L17 12M12.6944 17H22.8333" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+</div>
+
+<div class="frame S">
+<div class="content">
+<div class="slide"><h1>Camera</h1></div>
+</div>
+<div class="Header">
+<svg class="back" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 22L12 17L17 12M12.6944 17H22.8333" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+</div>
+
+    <svg>
+      <defs>
+        <filter id="liquid">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+           <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 25 -7" result="goo" />
+          <feBlend in="SourceGraphic" in2="goo" />
+        </filter>
+      </defs>
+    </svg>
+
+<script>
+
+
+const Icons = document.querySelectorAll(".icon.A");
+const Backgrounds = document.querySelectorAll(".background");
+const frames = document.querySelectorAll(".frame");
+const Frames = document.querySelectorAll(".frame.S");
+const Backs = document.querySelectorAll(".back");
+
+Icons.forEach((Icon,index) => {
+Icons[index].addEventListener("click", () => {
+
+document.querySelector(".icon.A.active").classList.remove("active");
+Icons[index].classList.add("active");
+
+document.querySelector(".frame.active").classList.remove("active");
+frames[index + 1].classList.add("active");
+
+setTimeout(() => {
+Frames[index].classList.add("active");},300)
+
+setTimeout(() => {
+document.querySelector(".frame.active").classList.remove("active");
+frames[0].classList.add("active");
+Toolbox.classList.remove("active");
+Icons[4].classList.add("active");
+Icons[index].classList.remove("active");},500)
+
+Backs[index].addEventListener("click", ()=> {
+Frames[index].classList.remove("active");});
+
+});});
+
+Add.addEventListener("click", () => {
+if(Toolbox.classList.contains("active")){Toolbox.classList.remove("active");}else{Toolbox.classList.add("active");};});
+
+
+</script>
+
+</body>
+</html>
